@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>交通方式指南 | 旅行探索</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav id="navbar">
+        <div class="container">
+            <div class="nav-left">
+                <div class="logo" style="font-size: 1.5rem; color: #2c5530; font-weight: bold;">旅行探索</div>
+            </div>
+            <div class="nav-right">
+                <div class="search-box">
+                    <input type="text" id="main-search-input" placeholder="搜索地名或景点名...">
+                    <button id="main-search-btn">🔍</button>
+                </div>
+                <button id="review-toggle-btn" class="search-like-btn">
+                    <i class="fas fa-comment-dots"></i> 分享体验
+                </button>
+                <div class="nav-links">
+                    <a href="index.html" class="nav-link">首页</a>
+                    <a href="random-spots.html" class="nav-link">随机推荐</a>
+                    <a href="top-rated.html" class="nav-link">高分景点</a>
+                    <a href="index.html#contact" class="nav-link">联系我们</a>
+                </div>
+            </div>
+        </div>
+        <!-- 评价框（默认隐藏） -->
+        <div class="review-box-container" id="review-box-container" style="display: none;">
+            <div class="container">
+                <div class="review-box">
+                    <h3>分享你的旅行体验</h3>
+                    <form id="review-form">
+                        <div class="form-group">
+                            <label for="review-spot">景点名称 <span class="required">*</span></label>
+                            <input type="text" id="review-spot" placeholder="请输入你评价的景点名" required>
+                        </div>
+                        <div class="form-group">
+                            <label>评分 <span class="required">*</span></label>
+                            <div class="star-rating" id="star-rating">
+                                <i class="fas fa-star" data-score="1"></i>
+                                <i class="fas fa-star" data-score="2"></i>
+                                <i class="fas fa-star" data-score="3"></i>
+                                <i class="fas fa-star" data-score="4"></i>
+                                <i class="fas fa-star" data-score="5"></i>
+                                <input type="hidden" id="review-score" value="0" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="review-content">评价内容 <span class="required">*</span></label>
+                            <textarea id="review-content" rows="3" placeholder="分享你的真实体验..." required></textarea>
+                        </div>
+                        <button type="submit" class="submit-review-btn">提交评价</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 交通方式指南页 -->
+    <section class="guide-page">
+        <div class="guide-container">
+            <!-- 返回按钮 -->
+            <a href="javascript:window.history.back()" class="back-btn">
+                <i class="fas fa-arrow-left"></i> 返回上一页
+            </a>
+
+            <div class="guide-header">
+                <h2>交通方式指南</h2>
+                <p>根据目的地位置与出行需求，选择最便捷、舒适的交通方式，让旅途更顺畅</p>
+            </div>
+
+            <div class="guide-content">
+                <div class="guide-section">
+                    <h3><i class="fas fa-plane"></i> 飞机出行</h3>
+                    <p>飞机是长途旅行的首选交通方式，速度快，节省时间，适合前往距离较远的目的地。</p>
+                    <ul class="guide-list">
+                        <li>适用场景：跨省市、跨国旅行，距离较远且时间紧张的出行计划</li>
+                        <li>推荐目的地：云南、新疆、青海、海南等远距离省份</li>
+                        <li>出行提示：提前1-2小时到达机场办理登机手续；携带行李需符合航空公司规定；提前关注航班动态，避免延误影响行程。</li>
+                    </ul>
+                    <div class="guide-tip">
+                        小贴士：机票价格波动较大，建议提前1-2个月预订，可享受较低折扣；灵活选择出行日期（如避开节假日），能节省更多费用。
+                    </div>
+                </div>
+
+                <div class="guide-section">
+                    <h3><i class="fas fa-train"></i> 高铁/火车出行</h3>
+                    <p>高铁和火车是中短途旅行的优质选择，舒适便捷，沿途可欣赏风景，性价比高。</p>
+                    <ul class="guide-list">
+                        <li>适用场景：省内旅行、周边省市游，距离适中（2-5小时车程）</li>
+                        <li>推荐目的地：长三角、珠三角、京津冀地区景点，如西湖、黄山、泰山等</li>
+                        <li>出行提示：提前通过12306预订车票，尤其是节假日期间；高铁车站较大，提前30分钟到达候车；携带身份证原件乘车。</li>
+                    </ul>
+                    <div class="guide-tip">
+                        小贴士：高铁二等座性价比最高，一等座更舒适；部分线路开通了“静音车厢”，适合需要休息或办公的旅行者。
+                    </div>
+                </div>
+
+                <div class="guide-section">
+                    <h3><i class="fas fa-car"></i> 自驾出行</h3>
+                    <p>自驾出行灵活性高，适合家庭游、朋友结伴游，可自由规划路线，随时停靠欣赏风景。</p>
+                    <ul class="guide-list">
+                        <li>适用场景：周边游、景区内交通、路况较好的乡村旅行</li>
+                        <li>推荐目的地：川西环线、青海湖环线、云南洱海环线、内蒙古草原</li>
+                        <li>出行提示：提前检查车辆状况，备好应急工具；规划好路线，熟悉路况；遵守交通规则，避免疲劳驾驶；部分山区道路狭窄，谨慎驾驶。</li>
+                    </ul>
+                    <div class="guide-tip">
+                        小贴士：自驾旅行可携带更多行李和户外装备，适合露营、野餐等特色体验；提前下载离线地图，避免山区信号不佳影响导航。
+                    </div>
+                </div>
+
+                <div class="guide-section">
+                    <h3><i class="fas fa-bus"></i> 大巴/景区交通</h3>
+                    <p>大巴和景区交通车是景区内及周边短途出行的主要方式，覆盖范围广，价格实惠。</p>
+                    <ul class="guide-list">
+                        <li>适用场景：景区内景点之间往返、市区到景区的短途运输</li>
+                        <li>推荐目的地：张家界、九寨沟、黄山等大型景区</li>
+                        <li>出行提示：景区大巴有固定发车时间和路线，提前了解班次；部分景区交通车需单独购票，可提前与门票一起预订；保管好车票，避免遗失。</li>
+                    </ul>
+                    <div class="guide-section">
+                        <h3><i class="fas fa-hiking"></i> 徒步/骑行</h3>
+                        <p>徒步和骑行适合近距离、慢节奏旅行，能深度感受自然与人文风情，适合户外爱好者。</p>
+                        <ul class="guide-list">
+                            <li>适用场景：景区内短途游览、乡村旅行、城市周边游</li>
+                            <li>推荐目的地：阳朔遇龙河、丽江古城、杭州西湖、厦门环岛路</li>
+                            <li>出行提示：选择舒适的徒步鞋或骑行装备；提前规划路线，了解路况；携带必要的水和零食，补充体力；注意防晒和安全。</li>
+                        </ul>
+                        <div class="guide-tip">
+                            小贴士：徒步和骑行是低碳环保的旅行方式，适合喜欢慢旅行的旅行者，能发现更多常规交通无法触及的美景。
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+</html>

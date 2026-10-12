@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>最佳出行时间 | 旅行探索</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav id="navbar">
+        <div class="container">
+            <div class="nav-left">
+                <div class="logo" style="font-size: 1.5rem; color: #2c5530; font-weight: bold;">旅行探索</div>
+            </div>
+            <div class="nav-right">
+                <div class="search-box">
+                    <input type="text" id="main-search-input" placeholder="搜索地名或景点名...">
+                    <button id="main-search-btn">🔍</button>
+                </div>
+                <button id="review-toggle-btn" class="search-like-btn">
+                    <i class="fas fa-comment-dots"></i> 分享体验
+                </button>
+                <div class="nav-links">
+                    <a href="index.html" class="nav-link">首页</a>
+                    <a href="random-spots.html" class="nav-link">随机推荐</a>
+                    <a href="top-rated.html" class="nav-link">高分景点</a>
+                    <a href="index.html#contact" class="nav-link">联系我们</a>
+                </div>
+            </div>
+        </div>
+        <!-- 评价框（默认隐藏） -->
+        <div class="review-box-container" id="review-box-container" style="display: none;">
+            <div class="container">
+                <div class="review-box">
+                    <h3>分享你的旅行体验</h3>
+                    <form id="review-form">
+                        <div class="form-group">
+                            <label for="review-spot">景点名称 <span class="required">*</span></label>
+                            <input type="text" id="review-spot" placeholder="请输入你评价的景点名" required>
+                        </div>
+                        <div class="form-group">
+                            <label>评分 <span class="required">*</span></label>
+                            <div class="star-rating" id="star-rating">
+                                <i class="fas fa-star" data-score="1"></i>
+                                <i class="fas fa-star" data-score="2"></i>
+                                <i class="fas fa-star" data-score="3"></i>
+                                <i class="fas fa-star" data-score="4"></i>
+                                <i class="fas fa-star" data-score="5"></i>
+                                <input type="hidden" id="review-score" value="0" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="review-content">评价内容 <span class="required">*</span></label>
+                            <textarea id="review-content" rows="3" placeholder="分享你的真实体验..." required></textarea>
+                        </div>
+                        <button type="submit" class="submit-review-btn">提交评价</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 最佳出行时间指南页 -->
+    <section class="guide-page">
+        <div class="guide-container">
+            <!-- 返回按钮 -->
+            <a href="javascript:window.history.back()" class="back-btn">
+                <i class="fas fa-arrow-left"></i> 返回上一页
+            </a>
+
+            <div class="guide-header">
+                <h2>最佳出行时间指南</h2>
+                <p>根据目的地气候与景观特点，选择最合适的出行季节，让旅行体验更完美</p>
+            </div>
+
+            <div class="guide-content">
+                <div class="guide-section">
+                    <h3><i class="fas fa-sun"></i> 春季（3-5月）</h3>
+                    <p>春季是万物复苏的季节，适合前往以花卉、草原、湖泊为特色的目的地，气温适宜，风景清新。</p>
+                    <ul class="guide-list">
+                        <li>推荐目的地：云南香格里拉、杭州西湖、大理洱海、江西婺源</li>
+                        <li>特色景观：樱花、油菜花、桃花盛开，草原返青，湖水清澈</li>
+                        <li>出行提示：部分地区早晚温差较大，需携带薄外套；春季雨水较多，备好雨具。</li>
+                    </ul>
+                    <div class="guide-tip">
+                        小贴士：春季是摄影爱好者的黄金季节，光线柔和，色彩丰富，适合拍摄自然风景和人文景观。
+                    </div>
+                </div>
+
+                <div class="guide-section">
+                    <h3><i class="fas fa-cloud-sun"></i> 夏季（6-8月）</h3>
+                    <p>夏季气候炎热，适合前往高山、森林、海滨等凉爽目的地，避暑纳凉的同时感受自然之美。</p>
+                    <ul class="guide-list">
+                        <li>推荐目的地：张家界、九寨沟、青海湖、贵州六盘水</li>
+                        <li>特色景观：避暑胜地、瀑布溪流、高山草甸、星空露营</li>
+                        <li>出行提示：山区天气多变，需携带防雨装备；紫外线强烈，做好防晒措施；部分地区需预防蚊虫叮咬。</li>
+                    </ul>
+                    <div class="guide-tip">
+                        小贴士：夏季是学生假期，热门景区人流量较大，建议提前预订住宿和门票，错峰出行。
+                    </div>
+                </div>
+
+                <div class="guide-section">
+                    <h3><i class="fas fa-leaf"></i> 秋季（9-11月）</h3>
+                    <p>秋季天高气爽，是旅行的黄金季节，适合前往以红叶、彩林、梯田为特色的目的地，景色绚烂。</p>
+                    <ul class="guide-list">
+                        <li>推荐目的地：九寨沟、喀纳斯、北京香山、桂林山水</li>
+                        <li>特色景观：红叶满山、彩林遍野、稻田金黄、秋高气爽</li>
+                        <li>出行提示：秋季气温逐渐下降，需携带外套；部分山区可能出现霜冻，注意保暖；红叶季游客较多，提前规划行程。</li>
+                    </ul>
+                    <div class="guide-tip">
+                        小贴士：秋季空气干燥，需及时补充水分；部分目的地海拔较高，注意预防高原反应。
+                    </div>
+                </div>
+
+                <div class="guide-section">
+                    <h3><i class="fas fa-snowflake"></i> 冬季（12-2月）</h3>
+                    <p>冬季寒冷多雪，适合前往以雪景、温泉、民俗为特色的目的地，感受冬日限定美景与人文风情。</p>
+                    <ul class="guide-list">
+                        <li>推荐目的地：哈尔滨冰雪大世界、长白山、丽江古城、西双版纳</li>
+                        <li>特色景观：雪景、雾凇、温泉、民俗节庆（如春节、藏历新年）</li>
+                        <li>出行提示：北方地区气温极低，需携带厚羽绒服、雪地靴、保暖内衣等防寒装备；部分山区道路可能结冰，注意交通安全。</li>
+                    </ul>
+                    <div class="guide-tip">
+                        小贴士：冬季是旅游淡季，部分景区门票和住宿价格优惠，适合预算有限且喜欢安静的旅行者。
+                    </div>
+                </div>
+
+                <div class="guide-section">
+                    <h3><i class="fas fa-map-marked-alt"></i> 全年适宜目的地</h3>
+                    <p>以下目的地气候温和，景色四季各异，全年都适合前往旅行：</p>
+                    <ul class="guide-list">
+                        <li>丽江古城：四季气候宜人，人文与自然景观兼具，适合休闲度假</li>
+                        <li>厦门鼓浪屿：海滨城市，气候温和，适合全年旅游观光</li>
+                        <li>成都：美食之都，周边景点丰富，气候湿润，四季适宜出行</li>
+                        <li>三亚：热带海滨风光，冬季温暖，夏季凉爽，全年适合海滨度假</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+</html>

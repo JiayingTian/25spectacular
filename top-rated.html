@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>高分景点评价 | 旅行探索</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- 导航栏（同步修复搜索框布局） -->
+    <nav id="navbar">
+        <div class="container">
+            <div class="nav-left">
+                <div class="logo" style="font-size: 1.5rem; color: #2c5530; font-weight: bold;">旅行探索</div>
+            </div>
+            <div class="nav-right" style="display: flex; align-items: center;">
+                <div class="search-box">
+                    <input type="text" id="main-search-input" placeholder="搜索地名或景点名...">
+                    <button id="main-search-btn">🔍</button>
+                </div>
+                <button id="review-toggle-btn" class="search-like-btn" style="margin-left: 12px; margin-right: 20px;">
+                    <i class="fas fa-comment-dots"></i> 分享体验
+                </button>
+                <div class="nav-links">
+                    <a href="index.html" class="nav-link">首页</a>
+                    <a href="random-spots.html" class="nav-link">随机推荐</a>
+                    <a href="top-rated.html" class="nav-link active">高分景点</a>
+                    <a href="index.html#contact" class="nav-link">联系我们</a>
+                </div>
+            </div>
+        </div>
+        <!-- 评价框（默认隐藏） -->
+        <div class="review-box-container" id="review-box-container" style="display: none;">
+            <div class="container">
+                <div class="review-box">
+                    <h3>分享你的旅行体验</h3>
+                    <form id="review-form">
+                        <div class="form-group">
+                            <label for="review-spot">景点名称 <span class="required">*</span></label>
+                            <input type="text" id="review-spot" placeholder="请输入你评价的景点名" required>
+                        </div>
+                        <div class="form-group">
+                            <label>评分 <span class="required">*</span></label>
+                            <div class="star-rating" id="star-rating">
+                                <i class="fas fa-star" data-score="1"></i>
+                                <i class="fas fa-star" data-score="2"></i>
+                                <i class="fas fa-star" data-score="3"></i>
+                                <i class="fas fa-star" data-score="4"></i>
+                                <i class="fas fa-star" data-score="5"></i>
+                                <input type="hidden" id="review-score" value="0" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="review-content">评价内容 <span class="required">*</span></label>
+                            <textarea id="review-content" rows="3" placeholder="分享你的真实体验..." required></textarea>
+                        </div>
+                        <button type="submit" class="submit-review-btn">提交评价</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 高分景点列表 -->
+    <section class="spots-page">
+        <!-- 返回按钮 -->
+        <div style="padding: 0 20px; margin-bottom: -20px;">
+            <a href="javascript:window.history.back()" class="back-btn">
+                <i class="fas fa-arrow-left"></i> 返回上一页
+            </a>
+        </div>
+        
+        <div class="page-header">
+            <h2>高分景点评价</h2>
+            <p>精选评分4.5分以上景点，基于真实用户体验推荐</p>
+        </div>
+        <div class="spots-grid" id="top-rated-spots-grid">
+            <!-- 景点卡片由JS动态生成 -->
+        </div>
+    </section>
+
+    <script src="script.js"></script>
+    <script>
+        // 景点数据
+        const spotData = [
+            {
+                id: 1,
+                name: "西湖",
+                img: "./images/xihu.jpg",
+                rating: 4.8,
+                detailLink: "spot-detail.html?id=1"
+            },
+            {
+                id: 2,
+                name: "丽江古城",
+                img: "https://images.unsplash.com/photo-1475924156734-496f6cac6ec1",
+                rating: 4.7,
+                detailLink: "spot-detail.html?id=2"
+            },
+            {
+                id: 3,
+                name: "张家界",
+                img: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4",
+                rating: 4.9,
+                detailLink: "spot-detail.html?id=3"
+            },
+            {
+                id: 4,
+                name: "长城",
+                img: "./images/changcheng.jpg",
+                rating: 4.6,
+                detailLink: "spot-detail.html?id=4"
+            },
+            {
+                id: 5,
+                name: "香格里拉",
+                img: "https://images.unsplash.com/photo-1470240731273-7821a6eeb6bd",
+                rating: 4.8,
+                detailLink: "spot-detail.html?id=5"
+            },
+            {
+                id: 6,
+                name: "洱海",
+                img: "https://images.unsplash.com/photo-1464278533981-50106e6176b1",
+                rating: 4.7,
+                detailLink: "spot-detail.html?id=6"
+            },
+            {
+                id: 7,
+                name: "九寨沟",
+                img: "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05",
+                rating: 4.9,
+                detailLink: "spot-detail.html?id=7"
+            },
+            {
+                id: 8,
+                name: "桂林山水",
+                img: "https://images.unsplash.com/photo-1447752875215-b2761acb3c5d",
+                rating: 4.8,
+                detailLink: "spot-detail.html?id=8"
+            },
+            // 新增景点数据
+            {
+                id: 9,
+                name: "黄山",
+                img: "https://images.pexels.com/photos/24723759/pexels-photo-24723759.jpeg",
+                rating: 4.9,
+                detailLink: "spot-detail.html?id=9"
+            },
+            {
+                id: 10,
+                name: "布达拉宫",
+                img: "https://images.pexels.com/photos/31013239/pexels-photo-31013239.jpeg",
+                rating: 4.9,
+                detailLink: "spot-detail.html?id=10"
+            },
+            {
+                id: 11,
+                name: "稻城亚丁",
+                img: "https://images.pexels.com/photos/34640808/pexels-photo-34640808.jpeg",
+                rating: 4.8,
+                detailLink: "spot-detail.html?id=11"
+            },
+            {
+                id: 12,
+                name: "桂林漓江",
+                img: "https://images.pexels.com/photos/34309248/pexels-photo-34309248.jpeg",
+                rating: 4.7,
+                detailLink: "spot-detail.html?id=12"
+            },
+            {
+                id: 13,
+                name: "苏州园林",
+                img: "https://images.pexels.com/photos/34654150/pexels-photo-34654150.jpeg",
+                rating: 4.8,
+                detailLink: "spot-detail.html?id=13"
+            },
+            {
+                id: 14,
+                name: "泰山",
+                img: "https://images.pexels.com/photos/11698089/pexels-photo-11698089.jpeg",
+                rating: 4.7,
+                detailLink: "spot-detail.html?id=14"
+            },
+            {
+                id: 15,
+                name: "呼伦贝尔大草原",
+                img: "https://images.pexels.com/photos/440731/pexels-photo-440731.jpeg",
+                rating: 4.8,
+                detailLink: "spot-detail.html?id=15"
+            },
+            {
+                id: 16,
+                name: "青海湖",
+                img: "https://images.pexels.com/photos/34630868/pexels-photo-34630868.jpeg",
+                rating: 4.8,
+                detailLink: "spot-detail.html?id=16"
+            },
+            {
+                id: 17,
+                name: "喀纳斯",
+                img: "https://images.pexels.com/photos/40465/pexels-photo-40465.jpeg",
+                rating: 4.9,
+                detailLink: "spot-detail.html?id=17"
+            },
+            {
+                id: 18,
+                name: "阳朔漓江",
+                img: "https://images.pexels.com/photos/34689818/pexels-photo-34689818.jpeg",
+                rating: 4.7,
+                detailLink: "spot-detail.html?id=18"
+            }
+        ];
+
+        // 页面加载后生成按评分排序的景点卡片
+        document.addEventListener('DOMContentLoaded', function() {
+            const spotsGrid = document.getElementById('top-rated-spots-grid');
+            const sortedSpots = [...spotData].sort((a, b) => b.rating - a.rating);
+            
+            sortedSpots.forEach(spot => {
+                const spotCard = document.createElement('div');
+                spotCard.className = 'spot-card';
+                spotCard.onclick = () => window.location.href = spot.detailLink;
+                
+                const starRating = generateStarRating(spot.rating);
+                
+                spotCard.innerHTML = `
+                    <div class="spot-card-img" style="background-image: url('${spot.img}');"></div>
+                    <div class="spot-card-content">
+                        <h3 class="spot-card-name">${spot.name}</h3>
+                        <div class="spot-card-rating">
+                            ${starRating}
+                            <span>${spot.rating}</span>
+                        </div>
+                    </div>
+                `;
+                
+                spotsGrid.appendChild(spotCard);
+            });
+        });
+
+        // 生成星级评分HTML
+        function generateStarRating(rating) {
+            const fullStars = Math.floor(rating);
+            const hasHalfStar = rating % 1 >= 0.5;
+            let starsHTML = '';
+            
+            for (let i = 0; i < fullStars; i++) {
+                starsHTML += '<i class="fas fa-star"></i>';
+            }
+            
+            if (hasHalfStar) {
+                starsHTML += '<i class="fas fa-star-half-alt"></i>';
+            }
+            
+            const totalStars = 5;
+            const emptyStars = totalStars - fullStars - (hasHalfStar ? 1 : 0);
+            for (let i = 0; i < emptyStars; i++) {
+                starsHTML += '<i class="far fa-star"></i>';
+            }
+            
+            return starsHTML;
+        }
+    </script>
+</body>
+</html>

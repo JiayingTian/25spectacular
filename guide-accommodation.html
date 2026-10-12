@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>住宿推荐指南 | 旅行探索</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav id="navbar">
+        <div class="container">
+            <div class="nav-left">
+                <div class="logo" style="font-size: 1.5rem; color: #2c5530; font-weight: bold;">旅行探索</div>
+            </div>
+            <div class="nav-right">
+                <div class="search-box">
+                    <input type="text" id="main-search-input" placeholder="搜索地名或景点名...">
+                    <button id="main-search-btn">🔍</button>
+                </div>
+                <button id="review-toggle-btn" class="search-like-btn">
+                    <i class="fas fa-comment-dots"></i> 分享体验
+                </button>
+                <div class="nav-links">
+                    <a href="index.html" class="nav-link">首页</a>
+                    <a href="random-spots.html" class="nav-link">随机推荐</a>
+                    <a href="top-rated.html" class="nav-link">高分景点</a>
+                    <a href="index.html#contact" class="nav-link">联系我们</a>
+                </div>
+            </div>
+        </div>
+        <!-- 评价框（默认隐藏） -->
+        <div class="review-box-container" id="review-box-container" style="display: none;">
+            <div class="container">
+                <div class="review-box">
+                    <h3>分享你的旅行体验</h3>
+                    <form id="review-form">
+                        <div class="form-group">
+                            <label for="review-spot">景点名称 <span class="required">*</span></label>
+                            <input type="text" id="review-spot" placeholder="请输入你评价的景点名" required>
+                        </div>
+                        <div class="form-group">
+                            <label>评分 <span class="required">*</span></label>
+                            <div class="star-rating" id="star-rating">
+                                <i class="fas fa-star" data-score="1"></i>
+                                <i class="fas fa-star" data-score="2"></i>
+                                <i class="fas fa-star" data-score="3"></i>
+                                <i class="fas fa-star" data-score="4"></i>
+                                <i class="fas fa-star" data-score="5"></i>
+                                <input type="hidden" id="review-score" value="0" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="review-content">评价内容 <span class="required">*</span></label>
+                            <textarea id="review-content" rows="3" placeholder="分享你的真实体验..." required></textarea>
+                        </div>
+                        <button type="submit" class="submit-review-btn">提交评价</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 住宿推荐指南页 -->
+    <section class="guide-page">
+        <div class="guide-container">
+            <!-- 返回按钮 -->
+            <a href="javascript:window.history.back()" class="back-btn">
+                <i class="fas fa-arrow-left"></i> 返回上一页
+            </a>
+
+            <div class="guide-header">
+                <h2>住宿推荐指南</h2>
+                <p>根据旅行预算、出行人数和体验需求，选择最合适的住宿类型，让旅途更舒适安心</p>
+            </div>
+
+            <div class="guide-content">
+                <div class="guide-section">
+                    <h3><i class="fas fa-hotel"></i> 酒店住宿</h3>
+                    <p>酒店是最常见的住宿选择，设施完善，服务专业，适合追求舒适、便捷的旅行者，从经济型到豪华型覆盖不同预算。</p>
+                    <ul class="guide-list">
+                        <li>适用场景：家庭游、商务出行、长途旅行，对住宿舒适度有一定要求</li>
+                        <li>类型划分：经济型酒店（如如家、汉庭）、中端酒店（如维也纳、全季）、豪华酒店（如五星级酒店）</li>
+                        <li>选择技巧：优先选择靠近景区或交通枢纽的酒店，节省通勤时间；预订时查看用户评价，重点关注卫生、隔音、服务等维度。</li>
+                    </ul>
+                    <div class="guide-tip">
+                        小贴士：酒店价格受季节和节假日影响较大，旺季（如节假日、旅游旺季）需提前1-2个月预订；部分酒店支持“早鸟价”，提前预订可享受优惠。
+                    </div>
+                </div>
+
+                <div class="guide-section">
+                    <h3><i class="fas fa-home"></i> 特色民宿</h3>
+                    <p>民宿是融入当地生活的优质选择，风格多样，充满人情味，适合喜欢深度体验、追求个性化的旅行者。</p>
+                    <ul class="guide-list">
+                        <li>适用场景：情侣游、朋友结伴游、自由行，希望感受当地风土人情</li>
+                        <li>推荐目的地：丽江古城、大理双廊、厦门鼓浪屿、杭州西湖周边</li>
+                        <li>选择技巧：优先选择评价数量多、评分高的民宿；关注民宿设施（如是否含早餐、有无独立卫浴、是否可免费停车）；提前与房东沟通入住时间和需求。</li>
+                    </ul>
+                    <div class="guide-tip">
+                        小贴士：民宿通常房间数量较少，旺季需提前2-3个月预订；部分民宿提供当地旅行攻略和特色体验（如手工制作、周边向导），可提前咨询房东。
+                    </div>
+                </div>
+
+                <div class="guide-section">
+                    <h3><i class="fas fa-campground"></i> 露营住宿</h3>
+                    <p>露营是户外爱好者的首选，亲近自然，体验独特，适合喜欢冒险、追求原生态体验的旅行者。</p>
+                    <ul class="guide-list">
+                        <li>适用场景：户外探险、草原旅行、森林度假，适合年轻旅行者或亲子家庭</li>
+                        <li>推荐目的地：内蒙古草原、青海湖、张家界国家森林公园、海边营地</li>
+                        <li>注意事项：选择正规露营地，确保安全设施完善；携带必要的露营装备（帐篷、睡袋、防潮垫、照明设备）；提前了解当地天气，避免恶劣天气露营；遵守露营地规定，爱护环境。</li>
+                    </ul>
+                    <div class="guide-tip">
+                        小贴士：新手露营可选择“拎包入住”的露营地，营地提供全套装备和基础服务；露营时注意保暖和防虫，携带常用药品（如感冒药、驱蚊液、创可贴）。
+                    </div>
+                </div>
+
+                <div class="guide-section">
+                    <h3><i class="fas fa-building"></i> 特色住宿（客栈/青旅/度假别墅）</h3>
+                    <p>除了常规住宿，还有多种特色类型可供选择，满足不同旅行需求和体验追求。</p>
+                    <ul class="guide-list">
+                        <li>青年旅社：适合 solo 旅行、学生群体，价格实惠，可认识来自各地的旅行者，共享空间多</li>
+                        <li>古镇客栈：适合古镇旅行（如丽江、平遥），建筑风格独特，充满地域特色，服务贴心</li>
+                        <li>度假别墅：适合多人同行（如家庭游、朋友聚会），空间大，设施齐全（如厨房、庭院），私密性强</li>
+                    </ul>
+                    <div class="guide-tip">
+                        小贴士：青年旅社需提前了解房型（如多人间、单人间），部分需自备洗漱用品；度假别墅预订时确认可入住人数和额外费用（如清洁费、水电费）；古镇客栈优先选择靠近核心景区但远离主干道的位置，兼顾便捷和安静。
+                    </div>
+                </div>
+
+                <div class="guide-section">
+                    <h3><i class="fas fa-check-circle"></i> 住宿预订通用技巧</h3>
+                    <p>无论选择哪种住宿类型，掌握以下技巧可让预订更省心、性价比更高：</p>
+                    <ul class="guide-list">
+                        <li>平台选择：优先使用大型预订平台（如携程、美团、飞猪），售后服务更有保障；关注平台优惠活动（如优惠券、满减活动）。</li>
+                        <li>查看评价：重点关注近3个月的用户评价，尤其是带图片的评价，了解真实住宿环境；注意筛选“差评”，规避卫生差、服务差的住宿。</li>
+                        <li>确认条款：预订前看清取消政策（如免费取消、限时取消），避免行程变动造成损失；确认是否含早餐、停车费、押金等细节。</li>
+                        <li>沟通需求：如需特殊服务（如加床、延迟退房、婴儿床），提前与住宿方沟通确认，避免到店后无法满足。</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+</html>

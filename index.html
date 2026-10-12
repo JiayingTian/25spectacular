@@ -1,0 +1,1065 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>旅行探索 | 发现自然之美</title>
+    <link rel="stylesheet" href="1.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/imagesLoaded/5.0.0/imagesloaded.pkgd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+    <style>
+      
+        /* 水平滚动样式 */
+        .demo-wrapper {
+            overflow-x: hidden;
+        }
+
+        .wrapper {
+            display: flex;
+        }
+
+        .demo-gallery:not(.last) {
+            padding-bottom: 1rem;
+        }
+
+        .demo-text .text {
+            font-size: clamp(8rem, 15vw, 16rem);
+            line-height: 1;
+            font-weight: 900;
+        }
+
+        /* 按钮样式优化 */
+        .explore-btn,
+        .submit-btn,
+        .info-item,
+        .contact-form button {
+            background: linear-gradient(135deg, #2c5530, #4a7c59);
+            color: white;
+            border: none;
+            padding: 14px 32px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(44, 85, 48, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* 添加 section.right 的 z-index 设置 */
+        .section.right {
+            z-index: 100;
+            position: relative;
+        }
+
+        .explore-btn:hover,
+        .submit-btn:hover,
+        .info-item:hover,
+        .contact-form button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(44, 85, 48, 0.4);
+            background: linear-gradient(135deg, #3e7042, #5b8c6f);
+        }
+
+        .explore-btn:active,
+        .submit-btn:active,
+        .info-item:active,
+        .contact-form button:active {
+            transform: translateY(-1px);
+        }
+
+        .explore-btn::before,
+        .submit-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .explore-btn:hover::before,
+        .submit-btn:hover::before {
+            left: 100%;
+        }
+
+        /* 联系表单样式优化 */
+        .contact-form {
+            max-width: 500px;
+            margin: 30px auto 0;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 15px 20px;
+            margin-bottom: 20px;
+            border: 2px solid #e8f5e9;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-family: inherit;
+            transition: all 0.3s ease;
+            background: #f8fff9;
+            box-sizing: border-box;
+        }
+
+        .contact-form input:focus,
+        .contact-form textarea:focus {
+            outline: none;
+            border-color: #2c5530;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(44, 85, 48, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .contact-form textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .contact-form button {
+            width: 100%;
+            padding: 16px;
+            font-size: 1.1rem;
+            margin-top: 10px;
+        }
+
+        /* 信息项样式优化 */
+        .info-item {
+            background: rgba(255, 255, 255, 0.9);
+            border: 2px solid transparent;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-align: left;
+        }
+
+        .info-item:hover {
+            border-color: #2c5530;
+            background: white;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(44, 85, 48, 0.15);
+        }
+
+        .info-item h3 {
+            color: #2c5530;
+            margin-bottom: 10px;
+            font-size: 1.3rem;
+        }
+
+        .info-item p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .info-item i {
+            color: #2c5530;
+            font-size: 1.2rem;
+            transition: transform 0.3s ease;
+        }
+
+        .info-item:hover i {
+            transform: translateX(5px);
+        }
+
+        /* 联系信息样式优化 */
+        .contact-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .contact-item {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .contact-item:hover {
+            border-color: #2c5530;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(44, 85, 48, 0.1);
+        }
+
+        .contact-item h3 {
+            color: #2c5530;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+
+        .contact-item p {
+            color: #666;
+            font-size: 1.1rem;
+            margin: 0;
+        }
+
+        /* 响应式调整 */
+        @media (max-width: 768px) {
+            .explore-btn,
+            .submit-btn {
+                padding: 12px 24px;
+                font-size: 1rem;
+            }
+
+            .contact-form {
+                padding: 20px;
+                margin: 20px 10px 0;
+            }
+
+            .contact-info {
+                grid-template-columns: 1fr;
+            }
+
+            .info-item {
+                padding: 15px;
+            }
+        }
+
+        /* 页面内容样式 */
+        .content {
+            position: relative;
+        }
+
+        .loading {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 1.5rem;
+            z-index: 10000;
+            text-align: center;
+        }
+
+        .section {
+            min-height: 100vh;
+            padding: 5rem 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            position: relative;
+            z-index: 10;
+        }
+
+        .section h1, .section h2, .section h3 {
+            margin-bottom: 1rem;
+            color: #2c5530;
+        }
+
+        .section p {
+            margin-bottom: 1.5rem;
+            max-width: 600px;
+            line-height: 1.6;
+        }
+
+        .section.right {
+            align-items: flex-end;
+            text-align: right;
+        }
+
+        .section.right p {
+            margin-left: auto;
+        }
+
+        .section.dark {
+            background: #1a1a1a;
+            color: white;
+        }
+
+        .section.dark h2 {
+            color: #4a7c59;
+        }
+
+        .ground-container {
+            position: relative;
+        }
+
+        .parallax {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            z-index: 0;
+        }
+
+        .ground {
+            background: linear-gradient(to bottom, #4a7c59, #2c5530);
+        }
+
+        .clouds {
+            background: url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2340&q=80') no-repeat center center;
+            background-size: cover;
+        }
+
+        .blueprint {
+            background: #1a1a1a;
+            color: white;
+            position: relative;
+            z-index: 10;
+            padding: 2rem 0;
+            overflow-x: hidden;
+        }
+
+        .sunset {
+            background: linear-gradient(to bottom, #ff7e5f, #feb47b);
+            color: white;
+            position: relative;
+            z-index: 10;
+        }
+
+        .sunset h2, .sunset h3 {
+            color: white;
+        }
+
+        .visit-info {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .contact-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .contact-item {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .contact-item:hover {
+            border-color: #2c5530;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(44, 85, 48, 0.15);
+        }
+
+        .contact-item h3 {
+            color: #2c5530;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .contact-item p {
+            color: #666;
+            font-size: 1rem;
+            margin: 0;
+            font-weight: 500;
+        }
+
+        .contact-form {
+            max-width: 600px;
+            margin: 30px auto 0;
+            padding: 25px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 16px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 12px 16px;
+            margin-bottom: 15px;
+            border: 2px solid #e8f5e9;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            font-family: inherit;
+            transition: all 0.3s ease;
+            background: #f8fff9;
+            box-sizing: border-box;
+        }
+
+        .contact-form input:focus,
+        .contact-form textarea:focus {
+            outline: none;
+            border-color: #2c5530;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(44, 85, 48, 0.1);
+        }
+
+        .contact-form textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 14px;
+            font-size: 1rem;
+            margin-top: 10px;
+            background: linear-gradient(135deg, #2c5530, #4a7c59);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(44, 85, 48, 0.3);
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(44, 85, 48, 0.4);
+            background: linear-gradient(135deg, #3e7042, #5b8c6f);
+        }
+
+        /* 响应式调整 */
+        @media (max-width: 768px) {
+            .contact-info {
+                grid-template-columns: 1fr;
+                max-width: 400px;
+            }
+
+            .contact-form {
+                margin: 20px 15px 0;
+                padding: 20px;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+
+            .contact-item {
+                padding: 15px;
+            }
+
+            .contact-item h3 {
+                font-size: 1rem;
+            }
+
+            .contact-item p {
+                font-size: 0.95rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .contact-form {
+                margin: 15px 10px 0;
+                padding: 15px;
+            }
+
+            .contact-form input,
+            .contact-form textarea {
+                padding: 10px 14px;
+                font-size: 0.9rem;
+            }
+
+            .submit-btn {
+                padding: 12px;
+                font-size: 0.95rem;
+            }
+        }
+
+        .visit-info a.info-item {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+            position: relative;
+            z-index: 20;
+        }
+
+        canvas {
+            pointer-events: none !important;
+            z-index: 1 !important;
+        }
+
+        /* 水平滚动部分样式 - 仅用于blueprint部分 */
+        .blueprint .demo-text {
+            padding: 4rem 0;
+        }
+
+        .blueprint .demo-text .text {
+            font-size: clamp(8rem, 15vw, 16rem);
+            line-height: 1;
+            font-weight: 900;
+            white-space: nowrap;
+            color: white;
+        }
+
+        .blueprint .demo-gallery {
+            padding-bottom: 2rem;
+        }
+
+        .blueprint .demo-gallery ul {
+            display: flex;
+        }
+
+        .blueprint .demo-gallery li {
+            flex-shrink: 0;
+            width: clamp(500px, 60vw, 800px);
+            padding-right: 2rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="content">
+        <div class="loading">跟随我们一起探索未至之境吧...</div>
+        <div class="trigger"></div>
+
+        <div class="section">
+            <h1>旅行探索</h1>
+            <h3>DISCOVER THE WORLD</h3>
+            <p>跨越山海，探索自然之美，解锁未知旅程，留下专属回忆</p>
+        </div>
+
+        <div class="section right">
+            <h2>探索自然之美</h2>
+            <p>我们致力于为你提供最纯粹的旅行体验，远离城市喧嚣，走进大自然的怀抱。无论是巍峨的山脉、清澈的湖泊，还是广袤的草原、神秘的森林，都能让你感受到生命的力量。</p>
+            <p>每一次旅行都是一次心灵的洗礼，我们精心挑选每一个目的地，只为让你遇见不一样的风景，收获难忘的回忆。</p>
+            <a href="random-spots.html" class="explore-btn">查看目的地</a>
+        </div>
+
+        <div class="ground-container">
+            <div class="parallax ground"></div>
+            <div class="section right">
+                <h2>独特旅行体验</h2>
+                <p>我们为你打造了多种特色旅行体验，满足不同旅行者的需求：</p>
+                <ul>
+                    <li>徒步探险：跟随专业向导，探索未被开发的自然秘境</li>
+                    <li>生态观察：近距离接触野生动物，感受自然生态的魅力</li>
+                    <li>文化体验：走进当地村落，体验传统生活方式，品尝特色美食</li>
+                    <li>休闲度假：在风景优美的自然环境中放松身心，远离压力</li>
+                </ul>
+                <p>每一种体验都经过精心设计，确保你能安全、舒适地享受旅行的乐趣。</p>
+                <a href="top-rated.html" class="explore-btn">查看优秀景点评价</a>
+            </div>
+
+            <div class="section">
+                <h2>精选旅行路线</h2>
+                <p>我们精心规划了多条特色旅行路线，从高山到大海，从森林到沙漠，带你领略中国最美的自然风光。</p>
+            </div>
+
+            <div class="section right">
+                <h2>出行指南</h2>
+                <p>为了让你的旅行更加顺利，我们整理了详细的出行指南：</p>
+                <div class="visit-info">
+                    <!-- 最佳出行时间 -->
+                    <div class="info-item" onclick="test()">
+                        <a href="guide-time.html" style="text-decoration: none; color: inherit;">
+                            <h3>最佳出行时间</h3>
+                            <p>根据目的地气候特点，推荐春秋两季出行，天气适宜，风景优美</p>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+
+                    <!-- 交通方式 -->
+                    <div class="info-item" onclick="window.location.href='guide-transport.html'">
+                        <a href="guide-transport.html" style="text-decoration: none; color: inherit;">
+                            <h3>交通方式</h3>
+                            <p>支持飞机、高铁、自驾等多种交通方式，提供详细路线规划</p>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+
+                    <!-- 住宿推荐 -->
+                    <div class="info-item" onclick="window.location.href='guide-accommodation.html'">
+                        <a href="guide-accommodation.html" style="text-decoration: none; color: inherit;">
+                            <h3>住宿推荐</h3>
+                            <p>精选当地特色民宿、生态酒店，兼顾舒适与体验感</p>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="parallax clouds"></div>
+        </div>
+
+        <!-- 水平滚动部分 - 替换原来的blueprint -->
+        <div class="blueprint">
+            <!-- 文字区域 1 -->
+            <section class="demo-text">
+                <div class="wrapper text">
+                    DISCOVER THE WORLD
+                </div>
+            </section>
+
+            <!-- 画廊区域 (4个部分) -->
+            <section class="demo-gallery">
+                <ul class="wrapper">
+                    <li>
+                        <img src="1.jpg" width="560" height="720" alt="Gallery image">
+                    </li>
+                    <li>
+                        <img src="6.jpg" width="560" height="720" alt="Gallery image">
+                    </li>
+                    <li>
+                        <img src="7.jpg" width="560" height="720" alt="Gallery image">
+                    </li>
+                </ul>
+            </section>
+
+            <section class="demo-gallery">
+                <ul class="wrapper">
+                    <li>
+                        <img src="2.jpg" width="560" height="720" alt="Gallery image">
+                    </li>
+                    <li>
+                        <img src="4.jpg" width="560" height="720" alt="Gallery image">
+                    </li>
+                    <li>
+                        <img src="8.jpg" width="560" height="720" alt="Gallery image">
+                    </li>
+                    <li>
+                        <img src="5.jpg" width="560" height="720" alt="Gallery image">
+                    </li>
+                </ul>
+            </section>
+
+            <section class="demo-gallery">
+                <ul class="wrapper">
+                    <li>
+                        <img src="9.jpg" width="560" height="720" alt="Gallery image">
+                    </li>
+                    <li>
+                        <img src="10.jpg" width="560" height="720" alt="Gallery image">
+                    </li>
+                    <li>
+                        <img src="12.jpg" width="560" height="720" alt="Gallery image">
+                    </li>
+                </ul>
+            </section>
+
+            <!-- 文字区域 2 -->
+            <section class="demo-text">
+                <div class="wrapper text">
+                    UNFORGETTABLE JOURNEYS
+                </div>
+            </section>
+        </div>
+
+        <div class="sunset">
+            <div class="section">
+                <h2>开启你的旅程</h2>
+                <h3>联系我们</h3>
+                <p>如果你有任何疑问、建议或合作需求，欢迎随时联系我们，我们将竭诚为你服务。</p>
+
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <h3><i class="fas fa-phone"></i> 电话咨询</h3>
+                        <p>19887582508</p>
+                    </div>
+                    <div class="contact-item">
+                        <h3><i class="fas fa-envelope"></i> 邮箱联系</h3>
+                        <p>lichenxi_449@qq.com</p>
+                    </div>
+                    <div class="contact-item">
+                        <h3><i class="fas fa-clock"></i> 工作时间</h3>
+                        <p>9:00-18:00（周一至周日）</p>
+                    </div>
+                </div>
+
+                <form class="contact-form">
+                    <div class="form-row">
+                        <input type="text" placeholder="你的姓名" required>
+                        <input type="email" placeholder="你的邮箱" required>
+                    </div>
+                    <input type="tel" placeholder="你的电话">
+                    <textarea placeholder="请告诉我们你的旅行需求或问题..." rows="3" required></textarea>
+                    <button type="submit" class="submit-btn">发送咨询信息</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        console.clear();
+
+        function test(){
+            console.log("test");
+        }
+
+        // 水平滚动功能
+        gsap.registerPlugin(ScrollTrigger);
+
+        const images = gsap.utils.toArray('img');
+        const loader = document.querySelector('.loader--text');
+        const updateProgress = (instance) => 
+            loader.textContent = `${Math.round(instance.progressedCount * 100 / images.length)}%`;
+
+        const showDemo = () => {
+            document.body.style.overflow = 'auto';
+            document.scrollingElement.scrollTo(0, 0);
+            gsap.to(document.querySelector('.loader'), { autoAlpha: 0 });
+            
+            // 水平滚动动画 - 仅应用于blueprint部分
+            gsap.utils.toArray('.blueprint section').forEach((section, index) => {
+                const w = section.querySelector('.wrapper');
+                if (w) {
+                    const [x, xEnd] = (index % 2) ? ['100%', (w.scrollWidth - section.offsetWidth) * -1] : [w.scrollWidth * -1, 0];
+                    gsap.fromTo(w, { x }, {
+                        x: xEnd,
+                        scrollTrigger: { 
+                            trigger: section, 
+                            scrub: 0.5,
+                            start: 'top bottom',
+                            end: 'bottom top'
+                        }
+                    });
+                }
+            });
+        }
+
+        // 确保imagesLoaded可用
+        if (typeof imagesLoaded !== 'undefined') {
+            imagesLoaded(images).on('progress', updateProgress).on('always', showDemo);
+        } else {
+            console.error('imagesLoaded is not defined');
+            // 备用方案：直接显示内容
+            showDemo();
+            gsap.to(document.querySelector('.loader'), { autoAlpha: 0, delay: 1 });
+        }
+
+        class WildGooseScene {
+            constructor() {
+                this.renderer = new THREE.WebGLRenderer({
+                    antialias: true,
+                    alpha: true
+                });
+
+                this.renderer.setSize(window.innerWidth, window.innerHeight);
+                this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+                this.renderer.domElement.style.position = 'fixed';
+                this.renderer.domElement.style.top = '0';
+                this.renderer.domElement.style.left = '0';
+                this.renderer.domElement.style.zIndex = '1';
+                this.renderer.domElement.style.pointerEvents = 'none';
+
+                document.body.appendChild(this.renderer.domElement);
+
+                // 场景和相机
+                this.scene = new THREE.Scene();
+                this.camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 1000);
+                this.camera.position.set(0, 0, 60);
+
+                // 灯光系统
+                this.setupLighting();
+
+                // 创建大雁模型
+                this.createWildGoose();
+
+                // 翅膀动画状态
+                this.wingFlapSpeed = 0;
+                this.wingFlapAmplitude = 0.3;
+
+                this.onResize();
+                window.addEventListener('resize', this.onResize.bind(this));
+
+                // 动画循环
+                this.animate();
+            }
+
+            setupLighting() {
+                // 环境光
+                const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+                this.scene.add(ambientLight);
+
+                // 主光源 - 模拟阳光
+                const mainLight = new THREE.DirectionalLight(0xfff7e6, 0.8);
+                mainLight.position.set(30, 50, 40);
+                mainLight.castShadow = true;
+                this.scene.add(mainLight);
+
+                // 补光 - 从下方照亮
+                const fillLight = new THREE.DirectionalLight(0x667788, 0.3);
+                fillLight.position.set(-20, -30, 20);
+                this.scene.add(fillLight);
+            }
+
+            createWildGoose() {
+                this.goose = new THREE.Group();
+
+                // 大雁身体 - 流线型设计
+                const bodyGeometry = new THREE.CylinderGeometry(0.8, 0.5, 4, 8);
+                const bodyMaterial = new THREE.MeshPhongMaterial({
+                    color: 0x8B7355,
+                    shininess: 30,
+                    specular: 0x222222
+                });
+                const body = new THREE.Mesh(bodyGeometry, bodyMaterial);
+                body.rotation.x = Math.PI / 2;
+                this.goose.add(body);
+
+                // 颈部 - 优雅的曲线
+                const neckGeometry = new THREE.CylinderGeometry(0.3, 0.5, 2.5, 6);
+                const neckMaterial = new THREE.MeshPhongMaterial({
+                    color: 0x8B7355,
+                    shininess: 40
+                });
+                const neck = new THREE.Mesh(neckGeometry, neckMaterial);
+                neck.position.set(0, 0.2, -1.8);
+                neck.rotation.x = -Math.PI / 6;
+                this.goose.add(neck);
+
+                // 头部
+                const headGeometry = new THREE.SphereGeometry(0.4, 8, 6);
+                const headMaterial = new THREE.MeshPhongMaterial({
+                    color: 0x8B7355,
+                    shininess: 50
+                });
+                const head = new THREE.Mesh(headGeometry, headMaterial);
+                head.position.set(0, 0.6, -3.8);
+                this.goose.add(head);
+
+                // 喙部
+                const beakGeometry = new THREE.ConeGeometry(0.15, 0.8, 4);
+                const beakMaterial = new THREE.MeshPhongMaterial({
+                    color: 0xFFA500,
+                    shininess: 80
+                });
+                const beak = new THREE.Mesh(beakGeometry, beakMaterial);
+                beak.position.set(0, 0.6, -4.2);
+                beak.rotation.x = Math.PI / 2;
+                this.goose.add(beak);
+
+                // 左翅膀 - 使用多个几何体创建更真实的翅膀形状
+                this.leftWing = this.createWing();
+                this.leftWing.position.set(1.2, 0, 0.5);
+                this.leftWing.rotation.y = Math.PI / 4;
+                this.goose.add(this.leftWing);
+
+                // 右翅膀
+                this.rightWing = this.createWing();
+                this.rightWing.position.set(-1.2, 0, 0.5);
+                this.rightWing.rotation.y = -Math.PI / 4;
+                this.rightWing.rotation.z = Math.PI; // 镜像
+                this.goose.add(this.rightWing);
+
+                // 尾部
+                const tailGeometry = new THREE.ConeGeometry(1.2, 1.5, 4);
+                const tailMaterial = new THREE.MeshPhongMaterial({
+                    color: 0x8B7355,
+                    shininess: 20
+                });
+                const tail = new THREE.Mesh(tailGeometry, tailMaterial);
+                tail.position.set(0, 0, 2);
+                tail.rotation.x = Math.PI / 2;
+                tail.rotation.z = Math.PI / 4;
+                this.goose.add(tail);
+
+                // 眼睛
+                const eyeGeometry = new THREE.SphereGeometry(0.08, 6, 6);
+                const eyeMaterial = new THREE.MeshPhongMaterial({ color: 0x000000 });
+                const leftEye = new THREE.Mesh(eyeGeometry, eyeMaterial);
+                const rightEye = new THREE.Mesh(eyeGeometry, eyeMaterial);
+                leftEye.position.set(0.15, 0.7, -4);
+                rightEye.position.set(-0.15, 0.7, -4);
+                this.goose.add(leftEye);
+                this.goose.add(rightEye);
+
+                this.scene.add(this.goose);
+            }
+
+            createWing() {
+                const wingGroup = new THREE.Group();
+
+                // 翅膀主体 - 类似鸟翼的三角形形状
+                const wingShape = new THREE.Shape();
+                wingShape.moveTo(0, 0);
+                wingShape.lineTo(4, 0.5);
+                wingShape.lineTo(0, 1.5);
+                wingShape.lineTo(-1, 1);
+                wingShape.lineTo(0, 0);
+
+                const wingGeometry = new THREE.ShapeGeometry(wingShape);
+                const wingMaterial = new THREE.MeshPhongMaterial({
+                    color: 0x6B8E23,
+                    shininess: 10,
+                    side: THREE.DoubleSide
+                });
+                const wing = new THREE.Mesh(wingGeometry, wingMaterial);
+                wing.rotation.x = -Math.PI / 2;
+                wingGroup.add(wing);
+
+                // 翅膀羽毛层次感
+                const featherGeometry = new THREE.PlaneGeometry(0.8, 0.3);
+                const featherMaterial = new THREE.MeshPhongMaterial({
+                    color: 0x556B2F,
+                    shininess: 60,
+                    side: THREE.DoubleSide
+                });
+
+                // 添加几根主要羽毛
+                for (let i = 0; i < 5; i++) {
+                    const feather = new THREE.Mesh(featherGeometry, featherMaterial);
+                    feather.position.set(2 + i * 0.4, 0.1, 0);
+                    feather.rotation.x = Math.PI / 2;
+                    feather.rotation.z = Math.PI / 8 * (i - 2);
+                    wingGroup.add(feather);
+                }
+
+                return wingGroup;
+            }
+
+            updateWings(time) {
+                if (!this.leftWing || !this.rightWing) return;
+
+                // 翅膀拍打动画
+                const flap = Math.sin(time * 5 + this.wingFlapSpeed) * this.wingFlapAmplitude;
+
+                this.leftWing.rotation.x = flap;
+                this.rightWing.rotation.x = -flap; // 相反方向拍打
+
+                // 轻微的身体起伏
+                this.goose.position.y = Math.sin(time * 3) * 0.2;
+            }
+
+            animate() {
+                requestAnimationFrame(() => this.animate());
+                const time = Date.now() * 0.001;
+
+                this.updateWings(time);
+                this.render();
+            }
+
+            render() {
+                this.renderer.render(this.scene, this.camera);
+            }
+
+            onResize() {
+                const width = window.innerWidth;
+                const height = window.innerHeight;
+
+                this.camera.aspect = width / height;
+                this.camera.updateProjectionMatrix();
+                this.renderer.setSize(width, height);
+                this.render();
+            }
+        }
+
+        function setupGooseAnimation() {
+            const scene = new WildGooseScene();
+
+            // 隐藏加载提示
+            gsap.to('.loading', {
+                autoAlpha: 0,
+                duration: 1.5,
+                onComplete: () => {
+                    gsap.to('.scroll-cta', { opacity: 1, duration: 1 });
+                }
+            });
+
+            // 大雁渐入动画
+            gsap.fromTo(scene.goose.scale,
+                { x: 0.5, y: 0.5, z: 0.5 },
+                { x: 1, y: 1, z: 1, duration: 2, ease: "back.out(1.7)" }
+            );
+
+            gsap.fromTo(scene.renderer.domElement,
+                { autoAlpha: 0 },
+                { autoAlpha: 1, duration: 2 }
+            );
+
+            // 创建滚动触发的飞行动画
+            const flightTimeline = gsap.timeline({
+                onUpdate: () => scene.render(),
+                scrollTrigger: {
+                    trigger: ".content",
+                    start: "top top",
+                    end: "bottom bottom",
+                    scrub: 1.5
+                }
+            });
+
+            // 大雁飞行路径动画
+            flightTimeline
+                // 第一阶段：从远处飞来
+                .to(scene.goose.position, { x: -25, y: 8, z: -15, duration: 3 })
+                .to(scene.goose.rotation, { x: 0.1, y: 0.5, z: -0.1, duration: 3 }, 0)
+                .to(scene, { wingFlapAmplitude: 0.4, duration: 2 }, 0)
+
+                // 第二阶段：转向并爬升
+                .to(scene.goose.position, { x: 20, y: 12, z: -25, duration: 4 })
+                .to(scene.goose.rotation, { x: 0.2, y: -0.8, z: 0.2, duration: 4 }, 3)
+                .to(scene, { wingFlapAmplitude: 0.5, duration: 2 }, 3)
+
+                // 第三阶段：俯冲
+                .to(scene.goose.position, { x: -15, y: 5, z: -35, duration: 3 })
+                .to(scene.goose.rotation, { x: -0.3, y: 0.3, z: -0.1, duration: 3 }, 7)
+
+                // 第四阶段：平稳滑翔
+                .to(scene.goose.position, { x: 30, y: 15, z: -20, duration: 4 })
+                .to(scene.goose.rotation, { x: 0.1, y: -1.2, z: 0.3, duration: 4 }, 10)
+                .to(scene, { wingFlapAmplitude: 0.2, duration: 2 }, 10)
+
+                // 最终阶段：飞向远方
+                .to(scene.goose.position, { x: -40, y: 25, z: 10, duration: 5 })
+                .to(scene.goose.rotation, { x: 0.4, y: 2.0, z: -0.2, duration: 5 }, 14)
+                .to(scene, { wingFlapAmplitude: 0.6, duration: 3 }, 14);
+
+            // 背景视差效果
+            gsap.to('.ground', {
+                y: "40%",
+                scrollTrigger: {
+                    trigger: ".ground-container",
+                    scrub: true,
+                    start: "top bottom",
+                    end: "bottom top"
+                }
+            });
+
+            gsap.from('.clouds', {
+                y: "35%",
+                scrollTrigger: {
+                    trigger: ".ground-container",
+                    scrub: true,
+                    start: "top bottom",
+                    end: "bottom top"
+                }
+            });
+        }
+
+        // 页面加载后启动
+        document.addEventListener('DOMContentLoaded', setupGooseAnimation);
+    </script>
+</body>
+</html>
